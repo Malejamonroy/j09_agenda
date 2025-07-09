@@ -114,9 +114,8 @@ public class Contacto implements Comparable<Contacto> {
 				+ apodo + ", " + dom + ", " + telefonos + ", " + correos + "]";
 	}
 
-	@Override
+	@Override  //orden natural
 	public int compareTo(Contacto o) {
-		// TODO Auto-generated method stub
 		return this.idContacto - o.idContacto;
 	}
 	
