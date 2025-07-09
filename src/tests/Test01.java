@@ -1,10 +1,15 @@
 package tests;
 
+import agenda.modelo.Contacto;
+import agenda.util.Contactos;
+
 public class Test01 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+	for(Contacto c : Contactos.generaContactos()) {
+		System.out.println(c);
+	}
 	}
 
 }
