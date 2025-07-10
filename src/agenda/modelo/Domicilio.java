@@ -12,7 +12,7 @@ public class Domicilio {
 	private String ciudad;
 	private String provincia;
 	
-	
+	public Domicilio () {}
 	
 	
 	public Domicilio(String tipoVia, String via, int numero, int piso, String puerta, String codigoPostal,

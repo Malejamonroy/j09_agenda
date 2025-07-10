@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Contacto implements Comparable<Contacto> {
+public class Contacto implements Comparable<Contacto>,Cloneable {
 
 	private int idContacto;
 	private String nombre;
@@ -119,7 +119,10 @@ public class Contacto implements Comparable<Contacto> {
 		return this.idContacto - o.idContacto;
 	}
 	
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException { //metodo clon devuelve una copia identica de el 
+		return new Contacto(idContacto,nombre,apellidos,apodo,dom);
+	}
 	
 	
 	
