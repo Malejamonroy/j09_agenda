@@ -10,6 +10,7 @@ public class MenuPrincipal {
 	
 	public MenuPrincipal() {
 		agenda = new AgendaImpl();
+		menu();
 	}
 	
 	public void menu() {
