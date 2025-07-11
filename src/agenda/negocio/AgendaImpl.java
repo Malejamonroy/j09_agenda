@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 import agenda.modelo.Contacto;
 import agenda.persistencia.ContactoDao;
-import agenda.persistencia.ContactoDaoMem;
+import agenda.persistencia.ContactoDaoMemSerial;
 
 
 
@@ -21,7 +21,8 @@ public class AgendaImpl implements Agenda {
 	private ContactoDao cDao;
 	
 	public AgendaImpl() {
-		cDao = new ContactoDaoMem();
+		//cDao = new ContactoDaoMem();
+		cDao= new ContactoDaoMemSerial();
 	}
 
 	@Override
