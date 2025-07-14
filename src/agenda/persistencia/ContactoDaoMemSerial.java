@@ -1,6 +1,9 @@
 package agenda.persistencia;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,9 +26,10 @@ public class ContactoDaoMemSerial implements ContactoDao {
 		
 	//hacemos el constructor
 	public ContactoDaoMemSerial() {
-		almacen = new HashMap<Integer, Contacto>();
-		proximoId = 1; //para que se valla incrementando
-		cargaInicial();
+//		almacen = new HashMap<Integer, Contacto>();
+//		proximoId = 1; //para que se valla incrementando
+//		cargaInicial();
+		leerFicheros();
 	}
 	
 	private void cargaInicial()
@@ -34,6 +38,27 @@ public class ContactoDaoMemSerial implements ContactoDao {
 			insertar(c);
 		}
 		grabar();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void leerFicheros() {
+		try(FileInputStream fisAlm= new FileInputStream(FICH_ALM);
+				FileInputStream fisId= new FileInputStream(FICH_ID)){
+			ObjectInputStream oisAlm = new ObjectInputStream(fisAlm);
+			ObjectInputStream oisId = new ObjectInputStream(fisId);
+			
+			almacen =(Map<Integer, Contacto>) oisAlm.readObject();//readObject este lo va a deserializar y meterlo en el mapa que es par anosotros en el almacen 
+			proximoId =(Integer) oisId.readObject(); //readInt ya nos devuelve un entero
+			
+		}catch (FileNotFoundException e) { //este va  saltar cuando los fiecheros no existan si existe se cargan con los datos guardados en leerficheros
+			almacen = new HashMap<Integer, Contacto>();
+			proximoId = 1; //para que se valla incrementando
+			cargaInicial();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		throw new RuntimeException();
+		}
 	}
 	
 	private void grabar() {
@@ -44,8 +69,8 @@ public class ContactoDaoMemSerial implements ContactoDao {
 			ObjectOutputStream oosAlm = new ObjectOutputStream(fosAlm);
 			ObjectOutputStream oosId = new ObjectOutputStream(fosId);
 			
-			oosAlm.writeObject(almacen);
-			oosId.writeInt(proximoId);
+			oosAlm.writeObject(almacen); //grabamos dos objetos de la memoria 
+			oosId.writeObject(proximoId);
 		
 		}catch (IOException e) {
 				e.printStackTrace();
@@ -59,18 +84,24 @@ public class ContactoDaoMemSerial implements ContactoDao {
 	public void insertar(Contacto c) {
 		c.setIdContacto(proximoId++);
 		almacen.put(c.getIdContacto(), c);
+		grabar();
 		
 	}
 
 	@Override
 	public void actualizar(Contacto c) {
 			almacen.replace(c.getIdContacto(), c);
+			grabar();
 		}
 		
 
 	@Override
 	public boolean eliminar(int idContacto) {  //Es el método que recibe un número (el id del contacto que queremos eliminar) y devuelve true si lo elimina, o false si no lo encuentra.
-		return almacen.remove(idContacto) != null; //se remueva directamente por clave 
+		Contacto eliminado=almacen.remove(idContacto); //hay que hacerlo asi porqie aunqtes solo 
+		grabar();
+		return eliminado != null; 
+		//return almacen.remove(idContacto) != null; //se remueva directamente por clave 
+	
 	}
 
 	@Override
