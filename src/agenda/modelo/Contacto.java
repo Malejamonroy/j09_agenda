@@ -18,7 +18,7 @@ public class Contacto implements Comparable<Contacto>,Cloneable ,Serializable{
 	public Contacto() {
 		telefonos = new LinkedHashSet<String>(); //para que se guarde el orden de carga y que el primero sea el principal
 		correos = new LinkedHashSet<String>();// para que se guarde todos los correos por orden de carga 
-		
+		dom = new Domicilio();
 	}
 	
 	public Contacto (int idContacto,String nombre,String apellidos,String apodo,Domicilio dom){
