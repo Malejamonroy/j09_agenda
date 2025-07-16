@@ -120,14 +120,53 @@ public class ContactoDaoJDBC implements ContactoDao {
 		try(Connection con = ds.getConnection())
 		{
 			String sql = "select idcontactos, nombre,apellidos,apodo,tipo_via,"
-					+ "via numero,piso, puerta,codigo_postal,ciudad,provincia "
+					+ "via ,numero,piso, puerta,codigo_postal,ciudad,provincia "
 					+ "from contactos "
 					+ "where nombre like ? or apellidos like ? or apodo like ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1,"%" + cadena + "%" );
+		ps.setString(2,"%" + cadena + "%" );
+		ps.setString(3,"%" + cadena + "%" );
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Contacto c = new Contacto();
+		c.setIdContacto(rs.getInt("idcontactos"));
+		c.setNombre(rs.getString("nombre"));
+		c.setApellidos(rs.getString("apellidos"));
+		c.setApodo(rs.getString("apodo"));
+		Domicilio dom = new Domicilio();
+		dom.setTipoVia(rs.getString("tipo_via"));
+		dom.setVia(rs.getString("via"));
+		dom.setNumero(rs.getInt("numero"));
+		dom.setPiso(rs.getInt("piso"));
+		dom.setCodigoPostal(rs.getString("codigo_postal"));
+		dom.setCiudad(rs.getString("ciudad"));
+		dom.setProvincia(rs.getString("provincia"));
+		c.setDom(dom);
+		sql="select telefono from telefonos where fk_contacto = ?";
+		PreparedStatement psTelefonos =con.prepareStatement(sql);
+		psTelefonos.setInt(1, c.getIdContacto());
+		ResultSet rsTelefonos = psTelefonos.executeQuery();
+		while(rsTelefonos.next()) {
+			c.addTelefonos(rsTelefonos.getString("telefono"));
+		}
+		
+		sql="select correo from correos where fk_contacto = ?";
+		PreparedStatement psCorreos =con.prepareStatement(sql);
+		psCorreos.setInt(1, c.getIdContacto());
+		ResultSet rsCorreos = psCorreos.executeQuery();
+		while(rsCorreos.next()) {
+			c.addCorreos(rsCorreos.getString("correo"));
+		}
+		busqueda.add(c);
+			
+		}
+		
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return busqueda;
 	}
 
