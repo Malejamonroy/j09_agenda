@@ -17,7 +17,7 @@ public class Main {
 			new VInicial();
 		else	
 			new MenuPrincipal();
-		//new VInicial();
+//		new VInicial();
 		
 
 	}

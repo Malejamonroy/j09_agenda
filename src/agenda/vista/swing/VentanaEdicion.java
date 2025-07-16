@@ -346,7 +346,7 @@ public class VentanaEdicion extends JFrame {
 
 		btnAgregarTelefono = new JButton("");
 		btnAgregarTelefono.setIcon(new ImageIcon(VentanaEdicion.class
-				.getResource("/images/icono.ok.png")));
+				.getResource("/agenda/images/icono.ok.png")));
 		btnAgregarTelefono.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnAgregarTelefono.setBounds(230, 33, 21, 25);
 		btnAgregarTelefono.setEnabled(false);
@@ -355,7 +355,7 @@ public class VentanaEdicion extends JFrame {
 
 		btnAgregarCorreo = new JButton("");
 		btnAgregarCorreo.setIcon(new ImageIcon(VentanaEdicion.class
-				.getResource("/images/icono.ok.png")));
+				.getResource("/agenda/images/icono.ok.png")));
 		btnAgregarCorreo.setBounds(746, 33, 21, 25);
 		btnAgregarCorreo.setEnabled(false);
 		btnAgregarCorreo.addActionListener(manejador);
@@ -363,7 +363,7 @@ public class VentanaEdicion extends JFrame {
 
 		btnBorrarTelefono = new JButton("");
 		btnBorrarTelefono.setIcon(new ImageIcon(VentanaEdicion.class
-				.getResource("/images/cancel-remove-icone-5993-96.png")));
+				.getResource("/agenda/images/cancel-remove-icone-5993-96.png")));
 		btnBorrarTelefono.setBounds(263, 54, 21, 25);
 		btnBorrarTelefono.addActionListener(manejador);
 		panelTelCorreos.add(btnBorrarTelefono);
@@ -371,7 +371,7 @@ public class VentanaEdicion extends JFrame {
 
 		btnBorrarCorreo = new JButton("");
 		btnBorrarCorreo.setIcon(new ImageIcon(VentanaEdicion.class
-				.getResource("/images/cancel-remove-icone-5993-96.png")));
+				.getResource("/agenda/images/cancel-remove-icone-5993-96.png")));
 		btnBorrarCorreo.setBounds(779, 54, 21, 25);
 		btnBorrarCorreo.addActionListener(manejador);
 		panelTelCorreos.add(btnBorrarCorreo);
